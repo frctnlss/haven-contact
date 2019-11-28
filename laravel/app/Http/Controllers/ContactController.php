@@ -6,7 +6,6 @@ use App\Contact;
 use App\Http\Requests\Contact\CreateContact;
 use App\Http\Requests\Contact\UpdateContact;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
