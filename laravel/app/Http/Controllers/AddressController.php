@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Http\Requests\Address\CreateAddress;
+use App\Http\Requests\Address\UpdateAddress;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -24,10 +25,10 @@ class AddressController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  CreateAddress  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CreateAddress $request)
     {
         try {
             $address = new Address($request->all());
@@ -53,11 +54,11 @@ class AddressController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
+     * @param  UpdateAddress  $request
      * @param  Address  $address
      * @return Response
      */
-    public function update(Request $request, Address $address)
+    public function update(UpdateAddress $request, Address $address)
     {
         try {
             $address->fill($request->all());
