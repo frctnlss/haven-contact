@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use App\Http\Requests\Contact\CreateContact;
+use App\Http\Requests\Contact\UpdateContact;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -37,11 +38,11 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
+     * @param  UpdateContact  $request
      * @param  Contact  $contact
      * @return Response
      */
-    public function update(Request $request, Contact $contact)
+    public function update(UpdateContact $request, Contact $contact)
     {
         $contact->fill($request->all());
         $contact->save();
