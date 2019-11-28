@@ -2,84 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use App\contact;
+use App\Contact;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(Contact::all(), Response::HTTP_OK);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\contact  $contact
-     * @return \Illuminate\Http\Response
-     */
-    public function show(contact $contact)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\contact  $contact
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(contact $contact)
-    {
-        //
+        $contact = new Contact($request->all());
+        $contact->save();
+        return response()->json($contact->fresh(), Response::HTTP_CREATED);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\contact  $contact
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param  Contact  $contact
+     * @return Response
      */
-    public function update(Request $request, contact $contact)
+    public function update(Request $request, Contact $contact)
     {
-        //
+        $contact->fill($request->all());
+        $contact->save();
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\contact  $contact
-     * @return \Illuminate\Http\Response
+     * @param  Contact  $contact
+     * @return Response
      */
-    public function destroy(contact $contact)
+    public function destroy(Contact $contact)
     {
-        //
+        try {
+            $contact->delete();
+            return response()->json([], Response::HTTP_NO_CONTENT);
+        } catch (Exception $exception) {
+            Log::error('Error deleting contact: ' . $exception->getMessage(), $exception->getTrace());
+            response()->json(['message' => 'Unknown Error'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
