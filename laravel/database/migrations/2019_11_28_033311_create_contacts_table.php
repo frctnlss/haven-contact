@@ -18,8 +18,8 @@ class CreateContactsTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');
-            $table->integer('phone_number', 12)->nullable();
-            $table->date('birthday');
+            $table->integer('phone_number')->nullable();
+            $table->date('birthday')->nullable();
             $table->timestamps();
         });
     }
