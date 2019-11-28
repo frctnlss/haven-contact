@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\Http\Requests\Contact\CreateContact;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -23,10 +24,10 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  CreateContact  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CreateContact $request)
     {
         $contact = new Contact($request->all());
         $contact->save();
