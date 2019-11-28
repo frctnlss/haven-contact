@@ -86,4 +86,22 @@ class ContactController extends Controller
     {
         return response()->json($contact->addresses()->get()->toArray(), Response::HTTP_OK);
     }
+
+    /**
+     * Retrieve all contacts paginated and in sorted order
+     *
+     * @param string $column
+     * @param string $direction
+     * @param int $size
+     * @param int $page
+     * @return Response
+     */
+    public function indexSortedPage(string $column, string $direction, int $size, int $page = 0)
+    {
+        return response()->json(Contact::query()
+            ->orderBy($column, $direction)
+            ->limit($size)
+            ->offset($page * $size)
+            ->get()->toArray(), Response::HTTP_OK);
+    }
 }
