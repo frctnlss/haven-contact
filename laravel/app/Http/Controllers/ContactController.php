@@ -75,4 +75,15 @@ class ContactController extends Controller
             return response()->json(['message' => 'Unknown Error'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Retrieve addresses associated with contact
+     *
+     * @param Contact $contact
+     * @return Response
+     */
+    public function showAddresses(Contact $contact)
+    {
+        return response()->json($contact->addresses()->get()->toArray(), Response::HTTP_OK);
+    }
 }
