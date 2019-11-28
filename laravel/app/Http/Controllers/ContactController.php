@@ -8,6 +8,7 @@ use App\Http\Requests\Contact\UpdateContact;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class ContactController extends Controller
 {
@@ -29,9 +30,14 @@ class ContactController extends Controller
      */
     public function store(CreateContact $request)
     {
-        $contact = new Contact($request->all());
-        $contact->save();
-        return response()->json($contact->fresh(), Response::HTTP_CREATED);
+        try {
+            $contact = new Contact($request->all());
+            $contact->saveOrFail();
+            return response()->json($contact->fresh(), Response::HTTP_CREATED);
+        } catch (Throwable $exception) {
+            Log::error('Error creating new contact: ' . $exception->getMessage(), $exception->getTrace());
+            return response()->json(['message' => 'Unknown Error'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -43,9 +49,14 @@ class ContactController extends Controller
      */
     public function update(UpdateContact $request, Contact $contact)
     {
-        $contact->fill($request->all());
-        $contact->save();
-        return response()->json([], Response::HTTP_NO_CONTENT);
+        try {
+            $contact->fill($request->all());
+            $contact->saveOrFail();
+            return response()->json([], Response::HTTP_NO_CONTENT);
+        } catch (Throwable $exception) {
+            Log::error('Error updating contact: ' . $exception->getMessage(), $exception->getTrace());
+            return response()->json(['message' => 'Unknown Error'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
