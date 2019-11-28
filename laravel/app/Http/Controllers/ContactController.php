@@ -72,7 +72,7 @@ class ContactController extends Controller
             return response()->json([], Response::HTTP_NO_CONTENT);
         } catch (Exception $exception) {
             Log::error('Error deleting contact: ' . $exception->getMessage(), $exception->getTrace());
-            response()->json(['message' => 'Unknown Error'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(['message' => 'Unknown Error'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

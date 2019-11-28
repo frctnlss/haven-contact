@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ContactController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('contact', ContactController::class)->except([
+    'create',
+    'show',
+    'edit'
+]);
+
+Route::resource('address', AddressController::class)->except([
     'create',
     'edit'
 ]);

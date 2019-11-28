@@ -5,7 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class contact extends Model
+class Contact extends Model
 {
     use SoftDeletes;
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
 }

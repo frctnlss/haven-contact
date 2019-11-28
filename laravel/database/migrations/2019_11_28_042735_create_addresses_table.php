@@ -13,10 +13,22 @@ class CreateAddressesTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('contact_id');
+            $table->string('type');
+            $table->string('street');
+            $table->string('city');
+            $table->string('state');
+            $table->integer('zip');
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('contact_id')
+                ->on('contacts')
+                ->onDelete('cascade');
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -26,6 +38,8 @@ class CreateAddressesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('addresses');
+        Schema::enableForeignKeyConstraints();
     }
 }

@@ -3,83 +3,86 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(Address::all(), Response::HTTP_OK);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $address = new Address($request->all());
+            $address->saveOrFail();
+            return response()->json($address->fresh(), Response::HTTP_CREATED);
+        } catch (Throwable $exception) {
+            Log::error('Error creating new contact: ' . $exception->getMessage(), $exception->getTrace());
+            return response()->json(['message' => 'Unknown Error'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Address  $address
-     * @return \Illuminate\Http\Response
+     * @param  Address  $address
+     * @return Response
      */
     public function show(Address $address)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Address  $address
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Address $address)
-    {
-        //
+        return response()->json($address, Response::HTTP_OK);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Address  $address
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param  Address  $address
+     * @return Response
      */
     public function update(Request $request, Address $address)
     {
-        //
+        try {
+            $address->fill($request->all());
+            $address->saveOrFail();
+            return response()->json([], Response::HTTP_NO_CONTENT);
+        } catch (Throwable $exception) {
+            Log::error('Error updating contact: ' . $exception->getMessage(), $exception->getTrace());
+            return response()->json(['message' => 'Unknown Error'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Address  $address
-     * @return \Illuminate\Http\Response
+     * @param  Address  $address
+     * @return Response
      */
     public function destroy(Address $address)
     {
-        //
+        try {
+            $address->delete();
+            return response()->json([], Response::HTTP_NO_CONTENT);
+        } catch (Exception $exception) {
+            Log::error('Error deleting contact: ' . $exception->getMessage(), $exception->getTrace());
+            return response()->json(['message' => 'Unknown Error'], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
