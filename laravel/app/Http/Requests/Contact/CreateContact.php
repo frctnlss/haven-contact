@@ -13,7 +13,7 @@ class CreateContact extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class CreateContact extends FormRequest
     public function rules()
     {
         return [
-            //
+            'firstName' => 'required|string',
+            'lastName' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'integer',
+            'birthday' => 'date'
         ];
     }
 }
