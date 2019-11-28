@@ -21,6 +21,7 @@ class CreateContactsTable extends Migration
             $table->integer('phone_number')->nullable();
             $table->date('birthday')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
