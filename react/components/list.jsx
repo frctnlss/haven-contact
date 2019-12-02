@@ -6,7 +6,7 @@ export const List = (props) => {
             list component
             {props.items.map((item, index) => {
                 return (
-                    <ListItem item={item} key={index}/>
+                    <ListItem item={item} parentKey={index} key={index}/>
                 );
             })}
         </div>
@@ -18,7 +18,7 @@ const ListItem = (props) => {
     if (typeof props.item == 'object') {
         for(const [index, element] of Object.entries(props.item)) {
             listElements.push(
-                <ListItem item={element} key={props.key + '_' + index} />
+                <ListItem item={element} key={props.parentKey + '_' + index} />
             );
         }
         return listElements;
