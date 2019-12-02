@@ -1,0 +1,89 @@
+version: '3.7'
+
+services:
+  web_app_watcher:
+    container_name: web_app_watcher
+    image: node:12.2.0-alpine
+    command: sh -c "npm install && npm run watch"
+    working_dir: /var/www/react
+    volumes:
+      - ../react:/var/www/react
+      - web_content:/var/www/public
+    networks:
+      - haven-contact
+
+  api_db:
+    container_name: api_db
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - "33070:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: haven_contact
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+    networks:
+      - haven-contact
+
+#  api_search:
+#    container_name: api_search
+#    image: docker.elastic.co/elasticsearch/elasticsearch:6.8
+#    ports:
+#      - "9200:9200"
+#    networks:
+#      - haven-contact
+
+  api_fpm:
+    container_name: api_fpm
+    build:
+      context: .
+      dockerfile: PHP/Dockerfile
+    command: sh -c "php composer.phar install && php artisan migrate; cd public && php-fpm"
+    expose:
+      - 9000
+    working_dir:  /var/www
+    volumes:
+      - ../laravel:/var/www
+    environment:
+      APP_NAME: Laravel
+      APP_ENV: local
+      APP_KEY: base64:diJFqlJtbdKLGZCsfYXQV2EBx9y/eqZ2uOKlCPB2Jf0=
+      APP_DEBUG: "true"
+      APP_URL: /
+      LOG_CHANNEL: stack
+      DB_CONNECTION: mysql
+      DB_HOST: api_db
+      DB_PORT: 3306
+      DB_DATABASE: haven_contact
+      DB_USERNAME: root
+      DB_PASSWORD: secret
+    networks:
+      - haven-contact
+
+  api_nginx:
+    container_name: nginx
+    image: nginx:perl
+    working_dir: /var/www/html
+    ports:
+      - "8090:80"
+      - "8091:81"
+    volumes:
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf
+      - web_content:/var/www/html
+    networks:
+      - haven-contact
+
+#Docker Networks
+networks:
+  haven-contact:
+    driver: bridge
+
+#Volumes
+volumes:
+  web_content:
+    driver: local
+  dbdata:
+    driver: local
