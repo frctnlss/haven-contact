@@ -16,7 +16,7 @@ class CreateAddressesTable extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::create('addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('contact_id');
+            $table->unsignedBigInteger('contact_id');
             $table->string('type');
             $table->string('street');
             $table->string('city');
@@ -25,6 +25,7 @@ class CreateAddressesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('contact_id')
+                ->references('id')
                 ->on('contacts')
                 ->onDelete('cascade');
         });
