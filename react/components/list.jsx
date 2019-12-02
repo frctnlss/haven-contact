@@ -14,10 +14,19 @@ export const List = (props) => {
 };
 
 const ListItem = (props) => {
+    const listElements = [];
+    if (typeof props.item == 'object') {
+        for(const [index, element] of Object.entries(props.item)) {
+            listElements.push(
+                <ListItem item={element} key={props.key + '_' + index} />
+            );
+        }
+        return listElements;
+    }
     return (
         <div>
             Item component
             {props.item}
         </div>
-    )
+    );
 };

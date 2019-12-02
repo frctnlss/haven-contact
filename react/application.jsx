@@ -6,7 +6,7 @@ export class Application extends React.Component {
         super(props);
         this.state = {
             contacts: [
-                "last"
+                { lastName: "last"}
             ]
         }
     }
