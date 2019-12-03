@@ -11,9 +11,13 @@ class Contact extends Model
 
     protected $guarded = [
         'id',
-        'createdAt',
-        'updatedAt',
-        'deletedAt'
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
+    protected $hidden = [
+        'deleted_at'
     ];
 
     public function addresses()

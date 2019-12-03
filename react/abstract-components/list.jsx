@@ -1,14 +1,15 @@
 import * as React from "react";
+import Table from "react-bootstrap/Table";
 
 export const List = (props) => {
     return (
-        <div>
+        <Table hover>
             {props.items.map((item, index) => {
                 return (
-                    <ListItem item={item} parentKey={index} key={index}/>
+                    <ListItem item={item} parentKey={index} key={index} />
                 );
             })}
-        </div>
+        </Table>
     );
 };
 
@@ -20,11 +21,17 @@ const ListItem = (props) => {
                 <ListItem item={element} key={props.parentKey + '_' + index} />
             );
         }
-        return listElements;
+        return (
+            <tbody>
+                <tr>
+                    {listElements}
+                </tr>
+            </tbody>
+        );
     }
     return (
-        <div>
+        <td>
             {props.item}
-        </div>
+        </td>
     );
 };
