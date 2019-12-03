@@ -25,10 +25,10 @@ class UpdateContact extends FormRequest
     {
         return [
             'id' => 'required|exists:contacts',
-            'firstName' => 'string',
-            'lastName' => 'string',
+            'first_name' => 'string',
+            'last_name' => 'string',
             'email' => 'string',
-            'phoneNumber' => 'integer',
+            'phone_number' => 'integer',
             'birthday' => 'date'
         ];
     }

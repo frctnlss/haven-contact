@@ -9,6 +9,13 @@ class Contact extends Model
 {
     use SoftDeletes;
 
+    protected $guarded = [
+        'id',
+        'createdAt',
+        'updatedAt',
+        'deletedAt'
+    ];
+
     public function addresses()
     {
         return $this->hasMany(Address::class);

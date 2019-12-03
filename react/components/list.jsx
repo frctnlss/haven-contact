@@ -3,7 +3,6 @@ import * as React from "react";
 export const List = (props) => {
     return (
         <div>
-            list component
             {props.items.map((item, index) => {
                 return (
                     <ListItem item={item} parentKey={index} key={index}/>
@@ -15,7 +14,7 @@ export const List = (props) => {
 
 const ListItem = (props) => {
     const listElements = [];
-    if (typeof props.item == 'object') {
+    if (typeof props.item === 'object' && props.item !== null) {
         for(const [index, element] of Object.entries(props.item)) {
             listElements.push(
                 <ListItem item={element} key={props.parentKey + '_' + index} />
@@ -25,7 +24,6 @@ const ListItem = (props) => {
     }
     return (
         <div>
-            Item component
             {props.item}
         </div>
     );

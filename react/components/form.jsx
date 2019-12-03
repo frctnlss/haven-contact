@@ -17,7 +17,11 @@ export const Form = (props) => {
 const FormItems = (props) => {
     return (
         <label>{props.item.label}
-            <input type={props.item.type} name={props.item.name} placeholder={props.item.default} onChange={props.item.change}/>
+            <input type={props.item.type}
+                   name={props.item.name}
+                   placeholder={props.item.default}
+                   required={props.item.required}
+                   onChange={props.item.change} />
         </label>
     )
 };

@@ -24,10 +24,10 @@ class CreateContact extends FormRequest
     public function rules()
     {
         return [
-            'firstName' => 'required|string',
-            'lastName' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
             'email' => 'required|email',
-            'phone' => 'integer',
+            'phone_number' => 'integer',
             'birthday' => 'date'
         ];
     }
