@@ -13,7 +13,6 @@ export class ContactList extends React.Component {
 
     componentDidMount() {
         apiRequest('get', 'contact').then(contacts => {
-            console.log(contacts);
             this.setState({contacts: contacts});
         }).catch(err => {
             console.error('Error retrieving contacts', err);
