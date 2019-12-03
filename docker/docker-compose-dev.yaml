@@ -9,6 +9,8 @@ services:
     volumes:
       - ../react:/var/www/react
       - web_content:/var/www/public
+    environment:
+      API_URL: http://localhost:8090/api/
     networks:
       - haven-contact
 
@@ -63,7 +65,7 @@ services:
     networks:
       - haven-contact
 
-  api_nginx:
+  nginx:
     container_name: nginx
     image: nginx:perl
     working_dir: /var/www/html
