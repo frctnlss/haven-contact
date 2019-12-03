@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Button} from "../abstract-components/button";
+import {PrimaryButton} from "../abstract-components/primary-button";
 import {ContactForm} from "./contact-form";
 
 export class ContactAddButton extends React.Component {
@@ -13,7 +13,7 @@ export class ContactAddButton extends React.Component {
     render() {
         return (
             <div>
-                <Button text={"Add Contact"} action={() => this.setState({showForm: !this.state.showForm})}/>
+                <PrimaryButton text={"Add Contact"} action={() => this.setState({showForm: !this.state.showForm})}/>
                 {this.state.showForm && (
                     <ContactForm submitted={contact => this.formSubmitted(contact)} />
                 )}
