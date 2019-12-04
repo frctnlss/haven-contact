@@ -24,7 +24,7 @@ Route::resource('contact', 'ContactController')->except([
     'edit'
 ]);
 
-Route::get('contact/{contact}/addresses', 'AddressController@showAddresses')
+Route::get('contact/{contact}/addresses', 'ContactController@showAddresses')
     ->name('contact.addresses');
 
 Route::get('contact/{column}/{direction}/{size}/{page?}', 'ContactController@indexSortedPage')

@@ -1,8 +1,8 @@
 import * as React from "react";
 import {PrimaryButton} from "../abstract-components/primary-button";
-import {ContactAddForm} from "./contact-add-form";
+import {AddressAddForm} from "./address-add-form";
 
-export class ContactAddButton extends React.Component {
+export class AddressAddButton extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,16 +13,16 @@ export class ContactAddButton extends React.Component {
     render() {
         return (
             <div>
-                <PrimaryButton text={"Add Contact"} action={() => this.setState({showForm: !this.state.showForm})}/>
+                <PrimaryButton text={"Add Address"} action={() => this.setState({showForm: !this.state.showForm})}/>
                 {this.state.showForm && (
-                    <ContactAddForm submitted={contact => this.formSubmitted(contact)} />
+                    <AddressAddForm submitted={address => this.formSubmitted(address)} contactId={this.props.contactId}/>
                 )}
             </div>
         );
     };
 
-    formSubmitted(contact) {
-        this.props.addContact(contact);
+    formSubmitted(address) {
+        this.props.addAddress(address);
         this.setState({showForm: false});
     }
 }

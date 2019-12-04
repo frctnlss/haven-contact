@@ -19,7 +19,8 @@ const FormItems = (props) => {
         <label>{props.item.label}
             <input type={props.item.type}
                    name={props.item.name}
-                   placeholder={props.item.default}
+                   placeholder={props.item.placeholder}
+                   defaultValue={props.item.default}
                    required={props.item.required}
                    onChange={props.item.change} />
         </label>

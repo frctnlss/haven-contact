@@ -1,8 +1,8 @@
 import * as React from "react";
-import {apiRequest} from "../utilities/api-request";
 import {Form} from "../abstract-components/form";
+import {apiRequest} from "../utilities/api-request";
 
-export class ContactForm extends React.Component {
+export class ContactUpdateForm extends React.Component {
     constructor(props) {
         super(props);
         this.formItems = [
@@ -10,52 +10,57 @@ export class ContactForm extends React.Component {
                 label: 'First Name',
                 name: 'first_name',
                 type: 'text',
-                default: 'Your first name',
+                default: props.contact.first_name,
                 required: true
             },
             {
                 label: 'Last Name',
                 name: 'last_name',
                 type: 'text',
-                default: 'Your last name',
+                default: props.contact.last_name,
                 required: true
             },
             {
                 label: 'Email Address',
                 name: 'email',
                 type: 'text',
-                default: 'Your email address',
+                default: props.contact.email,
                 required: true
             },
             {
                 label: 'Phone Number',
                 name: 'phone_number',
                 type: 'number',
-                default: '1231239876'
+                default: props.contact.phone_number
             },
             {
                 label: 'Birthday',
                 name: 'birthday',
                 type: 'date',
+                default: props.contact.birthday
             }
         ];
-    };
+    }
 
     render() {
-        return (<Form items={this.formItems} button='Save' submit={event => this.addNewContact(event)} />);
-    };
+        return (
+            <Form items={this.formItems} button='Update' submit={event => this.updateContact(event)} />
+        )
+    }
 
-    addNewContact(event) {
+    updateContact(event) {
         event.preventDefault();
-        let newContact = {};
+        let updatedContact = {
+            id: this.props.contact.id
+        };
         for (const [index, field] of Object.entries(this.formItems)) {
-            newContact[field.name] = event.target[index].value;
+            updatedContact[field.name] = event.target[index].value;
         }
-        apiRequest('post', 'contact', newContact)
+        apiRequest('put', 'contact', updatedContact)
             .then(contact => {
                 this.props.submitted(contact);
             }).catch(err => {
-            console.error('Error saving new contact', err);
+            console.error('Error updating contact', err);
         })
     }
 }

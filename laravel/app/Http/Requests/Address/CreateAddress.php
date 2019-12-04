@@ -24,7 +24,7 @@ class CreateAddress extends FormRequest
     public function rules()
     {
         return [
-            'contact_d' => 'required|exists:contact,id',
+            'contact_id' => 'required|exists:contacts,id',
             'type' => 'required|string|in:home,work,other',
             'street' => 'required|string',
             'city' => 'required|string',
